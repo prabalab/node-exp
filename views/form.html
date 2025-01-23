@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <form action="/process_get" method="GET">
-    First Name: <input type="text" name="first_name"><br>
-    Last Name: <input type="text" name="last_name"><br>
-    <input type="submit" value="Submit">
+  <form action="/add_user" method="POST">
+    Name: <input type="text" name="name" required><br>
+    Email: <input type="email" name="email" required><br>
+    <button type="submit">Add User</button>
   </form>
 </body>
 </html>
