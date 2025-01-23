@@ -46,16 +46,41 @@ app.post("/add_user", async (req, res) => {
   }
 });
 
-// Fetch all users
+
+// Fetch and display all users
 app.get("/users", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM users");
-    res.json(result.rows);
+
+    // Generate an HTML table to display users
+    let usersHtml = `
+      <h1>All Users</h1>
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>`;
+    result.rows.forEach((user) => {
+      usersHtml += `
+        <tr>
+          <td>${user.id}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+        </tr>`;
+    });
+    usersHtml += `
+      </table>
+      <br>
+      <button onclick="window.location.href='/'">Back to Form</button>`;
+
+    res.send(usersHtml);
   } catch (err) {
     console.error("Error fetching users:", err.message);
     res.status(500).send("Error fetching users.");
   }
 });
+
 
 // Start the server
 app.listen(PORT, () => {
